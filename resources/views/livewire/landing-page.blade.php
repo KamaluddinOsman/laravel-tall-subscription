@@ -42,7 +42,7 @@
                 type="email"
                 name="email"
                 placeholder="example@email.com"
-                wire:model.lazy="email"></x-input>
+                wire:model.defer="email"></x-input>
             
                 <span class="text-gray-100 text-xs mt-1">
                     @error('email')
@@ -52,7 +52,12 @@
                     @enderror
                 </span>
             <x-button class="px-5 py-3 mt-5 w-80 bg-blue-500 justify-center">
-                Get In
+                <span wire:loading wire:target="subscribe" class="animate-spin">
+                    &#9696;
+                </span>
+                <span wire:loading.remove wire:target="subscribe">
+                    Get In
+                </span>
             </x-button>
         </form>
     </x-modal>
@@ -64,9 +69,16 @@
         <p class="text-white text-5xl font-extrabold text-center mt-16">
             Greate!
         </p>
-        <p class="text-white text-3xl text-center">
-            See you in your inbox.
-        </p>
+
+        @if ( request()->has('verified') && request()->verified == 1)
+            <p class="text-white text-3xl text-center">
+                thanks for confirming.
+            </p>
+        @else
+            <p class="text-white text-3xl text-center">
+                See you in your inbox.
+            </p>
+        @endif
     </x-modal>
 
 </div>

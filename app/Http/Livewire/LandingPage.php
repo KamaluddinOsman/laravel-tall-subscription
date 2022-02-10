@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Subscriber;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Auth\Notifications\VerifyEmail;
@@ -18,6 +19,13 @@ class LandingPage extends Component
     protected $rules = [
         'email' => 'required|email:filter|unique:subscribers,email'
     ];
+
+    public function mount(Request $request)
+    {
+        if( $request->has('verified') && $request->verified ==  1 ){
+            $this->showSuccessSubscribe = true;
+        }
+    }
 
     public function subscribe()
     {
